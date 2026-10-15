@@ -1,1 +1,88 @@
-[]
+[
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-Wall",
+      "-I/usr/local/include",
+      "-I/run/media/rober/T7/UI_2/include",
+      "-c",
+      "-Wall",
+      "-I/usr/local/include",
+      "-I/run/media/rober/T7/UI_2/include",
+      "-o",
+      "build/Application.o",
+      "source/Application.cpp"
+    ],
+    "directory": "/run/media/rober/T7/UI_2",
+    "file": "/run/media/rober/T7/UI_2/source/Application.cpp",
+    "output": "/run/media/rober/T7/UI_2/build/Application.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-Wall",
+      "-I/usr/local/include",
+      "-I/run/media/rober/T7/UI_2/include",
+      "-c",
+      "-Wall",
+      "-I/usr/local/include",
+      "-I/run/media/rober/T7/UI_2/include",
+      "-o",
+      "build/GLFWwindow.o",
+      "source/GLFWwindow.cpp"
+    ],
+    "directory": "/run/media/rober/T7/UI_2",
+    "file": "/run/media/rober/T7/UI_2/source/GLFWwindow.cpp",
+    "output": "/run/media/rober/T7/UI_2/build/GLFWwindow.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-Wall",
+      "-I/usr/local/include",
+      "-I/run/media/rober/T7/UI_2/include",
+      "-c",
+      "-Wall",
+      "-I/usr/local/include",
+      "-I/run/media/rober/T7/UI_2/include",
+      "-o",
+      "build/main.o",
+      "source/main.cpp"
+    ],
+    "directory": "/run/media/rober/T7/UI_2",
+    "file": "/run/media/rober/T7/UI_2/source/main.cpp",
+    "output": "/run/media/rober/T7/UI_2/build/main.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-Wall",
+      "-I/usr/local/include",
+      "-I/run/media/rober/T7/UI_2/include",
+      "-c",
+      "-Wall",
+      "-I/usr/local/include",
+      "-I/run/media/rober/T7/UI_2/include",
+      "-o",
+      "build/Shader.o",
+      "source/Shader.cpp"
+    ],
+    "directory": "/run/media/rober/T7/UI_2",
+    "file": "/run/media/rober/T7/UI_2/source/Shader.cpp",
+    "output": "/run/media/rober/T7/UI_2/build/Shader.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-c",
+      "-Wall",
+      "-o",
+      "build/gl.o",
+      "source/gl.c"
+    ],
+    "directory": "/run/media/rober/T7/UI_2",
+    "file": "/run/media/rober/T7/UI_2/source/gl.c",
+    "output": "/run/media/rober/T7/UI_2/build/gl.o"
+  }
+]

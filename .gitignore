@@ -1,0 +1,5 @@
+*.json
+*.o
+.clangd
+gl.c
+UI_APP_LINUX
