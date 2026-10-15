@@ -1,8 +1,8 @@
 #pragma once
 
-#include <GL/gl.h>
-#include <GL/glext.h>
 #include <string>
+#include <glad/gl.h>
+#include <GL/glext.h>
 
 #include "Application.h"
 
@@ -10,8 +10,8 @@
 
 enum Shader_T
 {
-    APP_VERTEX = GL_VERTEX_SHADER,
-    APP_FRAGMENT = GL_FRAGMENT_SHADER
+    APP_VERTEX = 0x8B31,
+    APP_FRAGMENT = 0x8B30
 };
 
 class Shader
@@ -19,12 +19,13 @@ class Shader
     Application *app;
     Shader_T type;
 
-    GLuint shaderID;
-    char shaderProgram[];
+    unsigned int shaderID;
+    char shader[MAX_SHADER_SIZE];
     
     public:
     Shader();
     Shader(Application *app, Shader_T type);
     Shader(Application *app, Shader_T type, std::string shaderName);
+    void compileShader();
 
 };
