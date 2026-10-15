@@ -10,19 +10,19 @@
 
 enum Shader_T
 {
-    APP_VERTEX = 0x8B31,
-    APP_FRAGMENT = 0x8B30
+    APP_VERTEX = GL_VERTEX_SHADER,
+    APP_FRAGMENT = GL_FRAGMENT_SHADER
 };
 
 class Shader
 {
     Application *app;
     Shader_T type;
-
-    unsigned int shaderID;
     char shader[MAX_SHADER_SIZE];
     
     public:
+
+    unsigned int shaderID;
     Shader();
     Shader(Application *app, Shader_T type);
     Shader(Application *app, Shader_T type, std::string shaderName);

@@ -34,12 +34,13 @@ Shader::Shader(Application *APP, Shader_T TYPE, std::string SHADERNAME)
 
     if(!shaderFile.good()) { P_SHADERINFO("plik " << path << " nie istnieje"); }
     shaderFile.readsome(shader, std::filesystem::file_size(path));
-    P_SHADERINFO("Załadowano program :\n" << shader);
+    P_SHADERINFO("Załadowano program nr " << shaderID <<" :\n" << shader);
+    compileShader();
 }
 
 void Shader::compileShader()
 {
-    shaderID = glCreateShader(GL_VERTEX_SHADER);
+    shaderID = glCreateShader(type);
 
     const char* ptr = shader;
     glShaderSource(shaderID, 1, &ptr, NULL);
