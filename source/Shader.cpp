@@ -40,9 +40,18 @@ Shader::Shader(Application *APP, Shader_T TYPE, std::string SHADERNAME)
 
 void Shader::compileShader()
 {
+    int success;
     shaderID = glCreateShader(type);
+    char buffer[MAX_SHADER_SIZE];
 
     const char* ptr = shader;
     glShaderSource(shaderID, 1, &ptr, NULL);
     glCompileShader(shaderID);
+
+    glGetShaderiv(shaderID, GL_COMPILE_STATUS, &success);
+    if (!success)
+    {
+        glGetShaderInfoLog(shaderID, 512, NULL, buffer);
+        std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << buffer << std::endl;
+    }
 }

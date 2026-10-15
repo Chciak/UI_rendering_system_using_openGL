@@ -28,8 +28,6 @@ int main()
         return -1;
     }
 
-
-    GLuint renderingProgram = createShaderProgram();
     GLuint vao;
     glGenVertexArrays(1, &vao);
     glBindVertexArray(vao);
