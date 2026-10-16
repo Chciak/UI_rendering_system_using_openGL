@@ -89,7 +89,7 @@ class MeshObject
     void bindArrays();
     std::function<void()> render;
     std::function<void()> loadData;
-
 };
 
 template class MeshObject<3, BASIC>;
+template class MeshObject<2, BASIC>;

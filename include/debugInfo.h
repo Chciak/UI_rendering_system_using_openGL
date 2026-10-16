@@ -1,8 +1,9 @@
 #pragma once
 
-#define APPINFO     true
+#define APPINFO     false
 #define SHADERINFO  true
 #define MESHINFO    true
+#include <iostream>
 
 #if APPINFO
     #define P_APPINFO(info) std::cout << "[APPINFO] " << info << '\n';

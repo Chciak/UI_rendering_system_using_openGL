@@ -1,5 +1,6 @@
 #include "MeshObject.h"
 #include "debugInfo.h"
+
 #include <GL/gl.h>
 #include <GL/glext.h>
 
@@ -34,6 +35,7 @@ MeshObject<Size, type>::MeshObject(ShaderProgram &shaderP,Mesh &mesh)
     meshPointer = &mesh;
     render = [this]()
     {
+        glClear(GL_COLOR_BUFFER_BIT);
         this->bindArrays();
         shaderProgram->makeCurrent();
         glDrawArrays(GL_TRIANGLES, 0, meshPointer->size());

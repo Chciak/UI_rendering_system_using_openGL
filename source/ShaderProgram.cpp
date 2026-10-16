@@ -1,7 +1,7 @@
 #include "ShaderProgram.h"
 #include "Shader.h"
 #include <GL/gl.h>
-#include <algorithm>
+#include <iostream>
 
 ShaderProgram::ShaderProgram(std::vector<Shader*> SHADERS)
     :shaders(SHADERS)
@@ -17,7 +17,6 @@ ShaderProgram::ShaderProgram(std::vector<Shader*> SHADERS)
     }
 
     glLinkProgram(shaderProgram);
-
     glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
 
     if(!success)
@@ -26,10 +25,10 @@ ShaderProgram::ShaderProgram(std::vector<Shader*> SHADERS)
         std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
     }
 
-    // for(int i = 0; i < SHADERS.size(); i++)
-    // {
-    //     glDeleteShader(SHADERS.at(i)->shaderID);
-    // }
+    for(int i = 0; i < SHADERS.size(); i++)
+    {
+        glDeleteShader(SHADERS.at(i)->shaderID);
+    }
 
     glUseProgram(shaderProgram);
 }
