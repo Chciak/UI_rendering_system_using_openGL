@@ -1,3 +1,5 @@
+#pragma once
+
 #include <vector>
 #include <glad/gl.h>
 #include <GL/glext.h>

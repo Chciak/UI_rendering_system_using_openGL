@@ -4,3 +4,5 @@
 gl.c
 UI_APP_LINUX
 compile_commands.json
+build/*
+.clangd
