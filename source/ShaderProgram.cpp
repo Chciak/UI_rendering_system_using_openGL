@@ -4,15 +4,16 @@
 #include <algorithm>
 
 ShaderProgram::ShaderProgram(std::vector<Shader*> SHADERS)
+    :shaders(SHADERS)
 {
     int success;
     char infoLog[512];
 
     shaderProgram = glCreateProgram();
 
-    for(int i = SHADERS.size() -1; i >= 0; i--)
+    for(int i = shaders.size() -1; i >= 0; i--)
     {
-        glAttachShader(shaderProgram, SHADERS.at(i)->shaderID);
+        glAttachShader(shaderProgram, shaders.at(i)->shaderID);
     }
 
     glLinkProgram(shaderProgram);

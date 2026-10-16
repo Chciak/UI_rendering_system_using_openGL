@@ -29,28 +29,27 @@ int main()
         return -1;
     }
 
-    GLuint vao;
-    glGenVertexArrays(1, &vao);
-    glBindVertexArray(vao);
+    // GLuint vao;
+    // glGenVertexArrays(1, &vao);
+    // glBindVertexArray(vao);
 
-    GLuint vbo;
-    glGenBuffers(1, &vbo);
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    // GLuint vbo;
+    // glGenBuffers(1, &vbo);
+    // glBindBuffer(GL_ARRAY_BUFFER, vbo);
 
-    float vertices[] = {
-    -0.5f, -0.5f, 0.0f,
-     0.5f, -0.5f, 0.0f,
-     0.0f,  0.5f, 0.0f
-    };  
+    // float vertices[] = {
+    // -0.5f, -0.5f, 0.0f,
+    //  0.5f, -0.5f, 0.0f,
+    //  0.0f,  0.5f, 0.0f
+    // };  
 
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices),vertices ,GL_STATIC_DRAW);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)3);
-    glEnableVertexAttribArray(0);
+    // glBufferData(GL_ARRAY_BUFFER, sizeof(vertices),vertices ,GL_STATIC_DRAW);
+    // glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    // glEnableVertexAttribArray(0);
 
     
     Shader vert {app, APP_VERTEX, "test"};
     Shader frag {app, APP_FRAGMENT, "test"};
-    std::vector<Shader *> test = {&vert, &frag};
     ShaderProgram prog {{&vert, &frag}};
 
     std::vector<MeshData<3>> mesh1 = {
@@ -59,16 +58,16 @@ int main()
         {{0.0f,  0.5f, 0.0f}, {{0.0f, 0.0f, 1.0f}}}
     };
 
-    MeshObject<3, BASIC> triangle{{&vert, &frag}, mesh1};
+    MeshObject<3, BASIC> triangle{prog, mesh1};
 
     glClearColor(0.33f, 0.33f, 0.33f, 1.0f);
     while (!glfwWindowShouldClose(window->window))
     {
         glClear(GL_COLOR_BUFFER_BIT);
-        prog.makeCurrent();
-        glBindVertexArray(vao);
-        glPointSize(30.0f);
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        // glBindVertexArray(vao);
+        // prog.makeCurrent();
+        // glDrawArrays(GL_TRIANGLES, 0, 3);
+        triangle.render();
 
         glfwSwapBuffers(window->window);
         glfwPollEvents();

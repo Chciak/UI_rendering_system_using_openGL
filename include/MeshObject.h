@@ -1,8 +1,9 @@
 #pragma  once
 
+#include <functional>
 #include <glad/gl.h>
 #include <vector>
-#include "Shader.h"
+#include "ShaderProgram.h"
 
 
 struct Coordinates
@@ -79,12 +80,16 @@ class MeshObject
     typedef std::vector<MeshData<Size>> Mesh;
 
     GLuint VAO, VBO, EBO;
-    Shader *vertex, *fragment;
+    ShaderProgram *shaderProgram;
     Mesh *meshPointer;
 
     public:
     MeshObject();
-    MeshObject(std::vector<Shader*> shaders, Mesh &mesh);
+    MeshObject(ShaderProgram &shaderP, Mesh &mesh);
+    void bindArrays();
+    std::function<void()> render;
+    std::function<void()> loadData;
+
 };
 
 template class MeshObject<3, BASIC>;

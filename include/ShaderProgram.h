@@ -13,6 +13,7 @@ class ShaderProgram
     public:
     std::vector<Shader*> shaders;
     GLuint shaderProgram;
+    
     ShaderProgram(){};
     ShaderProgram(std::vector<Shader*> SHADERS);
     void makeCurrent();
