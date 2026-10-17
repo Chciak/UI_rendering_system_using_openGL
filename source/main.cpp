@@ -8,40 +8,42 @@
 #include "Shader.h"
 #include "ShaderProgram.h"
 
-int init()
+int main()
 {
+   
     if (!glfwInit())
     {
         std::cerr << "Nie udalo sie zainicjalizowac GLFW!\n";
         return -1;
     }
 
+    Application app{};
+    app.setShaderDir("shader");
+    
     if (!gladLoadGL((GLADloadfunc)glfwGetProcAddress))
     {
         std::cerr << "Nie udalo sie zainicjalizowac GLAD!\n";
         glfwTerminate();
         return -1;
-    }
-}
-
-int main()
-{
-    
-    if(!init()) return -1;
-
-    Application app{};
-    app.setShaderDir("shader");
+    }    
     
     Shader vert {&app, APP_VERTEX, "test"};
     Shader frag {&app, APP_FRAGMENT, "test"};
     ShaderProgram prog {{&vert, &frag}};
 
-    std::vector<MeshData<3>> mesh1 = {
-        {{-0.5f, -0.5f, 0.0f}, {{1.0f, 0.0f, 0.0f}}},
-        {{0.5f, -0.5f, 0.0f}, {{0.0f, 1.0f, 0.0f}}},
-        {{0.0f,  0.5f, 0.0f}, {{0.0f, 0.0f, 1.0f}}}
+    std::vector<MeshData<3>> mesh = {
+        {{ 0.5f,  0.5f, 0.0f},{{1.0f, 0.0f, 0.0f}}},
+        {{ 0.5f, -0.5f, 0.0f},{{1.0f, 0.0f, 0.0f}}},
+        {{-0.5f, -0.5f, 0.0f},{{1.0f, 0.0f, 0.0f}}},
+        {{-0.5f,  0.5f, 0.0f},{{1.0f, 0.0f, 0.0f}}}
     };
-    MeshObject<3, BASIC> triangle{prog, mesh1};
+
+    std::vector<int> indices = {  // note that we start from 0!
+        0, 1, 3,
+        1, 2, 3
+    };
+
+    MeshObject<3, INDEXED, false> triangle{prog, mesh, indices};
 
     app.prepress();
     while (!glfwWindowShouldClose(app.window->window))

@@ -1,4 +1,5 @@
 #include "GLFWwindow.h"
+#include <iostream>
 
 
 GLFWWindow::GLFWWindow(int rezx, int rezy)
@@ -22,6 +23,11 @@ GLFWWindow::GLFWWindow(int rezx, int rezy)
 
     glfwMakeContextCurrent(window);
 
+}
+
+void GLFWWindow::sayHello()
+{
+    std::cout << "[WINDOW ] : Hello\n"; 
 }
 
 GLFWWindow::~GLFWWindow()

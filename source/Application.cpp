@@ -1,7 +1,9 @@
 #include "Application.h"
+#include <cstddef>
 #include <cstdlib>
 #include <cstring>
 
+#include "GLFWwindow.h"
 #include "debugInfo.h"
 
 Application::Application()
@@ -11,7 +13,13 @@ Application::Application()
 
 void Application::setShaderDir(const char sDir[])
 {
-    window = new GLFWWindow(XREZ, YREZ);
+    window = nullptr;
+    try {
+        window = new GLFWWindow(XREZ, YREZ);
+    } catch (const std::exception& e) {
+        std::cerr << "Blad inicjalizacji okna: " << e.what() << std::endl;
+    }
+
     int size = 0;
     while(sDir[size] != '\0') { size ++; }
     shaderDir = (char *)malloc(sizeof(*sDir) * size);
@@ -26,7 +34,7 @@ void Application::setShaderDir(const char sDir[])
 
     postpress = [this]()
     {
-        glfwSwapBuffers(this->window->window);
+        glfwSwapBuffers(window->window);
         glfwPollEvents();
     };
 

@@ -5,7 +5,6 @@
 #include <vector>
 #include "ShaderProgram.h"
 
-
 struct Coordinates
 {
     float x,y,z;
@@ -14,16 +13,7 @@ struct Coordinates
 template<int Size, bool hasUV = (Size == 2), bool hasMore = (Size > 2)>
 struct MeshData : public Coordinates
 {
-    union
-    {
-        float data[Size];
-
-        struct
-        {
-            float U;
-            float V;
-        };
-    };
+    float data[Size];
 };
 
 template<int Size>
@@ -74,22 +64,42 @@ enum MeshObject_T
     INSTANCED
 };
 
-template<int Size, MeshObject_T type>
+template<int Size, MeshObject_T type, bool bakcPropagated>
 class MeshObject
 {
+    protected:
+
     typedef std::vector<MeshData<Size>> Mesh;
 
-    GLuint VAO, VBO, EBO;
+    GLuint VAO, VBO;
+
     ShaderProgram *shaderProgram;
-    Mesh *meshPointer;
+    Mesh meshPointer;
 
     public:
     MeshObject();
     MeshObject(ShaderProgram &shaderP, Mesh &mesh);
-    void bindArrays();
+    virtual inline void bindArrays();
+    virtual inline void genBuffers();
     std::function<void()> render;
     std::function<void()> loadData;
 };
 
-template class MeshObject<3, BASIC>;
-template class MeshObject<2, BASIC>;
+template<int Size, bool bakcPropagated>
+class MeshObject <Size, INDEXED, bakcPropagated> : public MeshObject<Size, BASIC, true>
+{
+    typedef std::vector<MeshData<Size>> Mesh;
+
+    GLuint EBO;
+    std::vector<int> eboDataPointer;
+
+    public:
+    MeshObject() : MeshObject<Size, BASIC, true>(){};
+    MeshObject(ShaderProgram &shaderP, Mesh &mesh, std::vector<int> &eboDataPointer);
+    inline void bindArrays() override;
+    inline void genBuffers() override;
+};
+
+template class MeshObject<3, INDEXED, false>;
+template class MeshObject<3, BASIC, false>;
+template class MeshObject<3, BASIC, true>;

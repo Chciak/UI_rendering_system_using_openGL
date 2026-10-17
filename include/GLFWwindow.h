@@ -14,5 +14,6 @@ class GLFWWindow
 
     GLFWWindow(){};
     GLFWWindow(int rezx,int rezy);
+    void sayHello();
     ~GLFWWindow();
 };
