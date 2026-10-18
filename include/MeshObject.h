@@ -79,10 +79,11 @@ class MeshObject
     public:
     MeshObject();
     MeshObject(ShaderProgram &shaderP, Mesh &mesh);
+    virtual ~MeshObject();
     virtual inline void bindArrays();
     virtual inline void genBuffers();
-    std::function<void()> render;
-    std::function<void()> loadData;
+    virtual void render();
+    virtual void loadData();
 };
 
 template<int Size, bool bakcPropagated>
@@ -96,10 +97,14 @@ class MeshObject <Size, INDEXED, bakcPropagated> : public MeshObject<Size, BASIC
     public:
     MeshObject() : MeshObject<Size, BASIC, true>(){};
     MeshObject(ShaderProgram &shaderP, Mesh &mesh, std::vector<int> &eboDataPointer);
+    ~MeshObject();
     inline void bindArrays() override;
     inline void genBuffers() override;
+
+    virtual inline void render() override;
+    virtual inline void loadData() override;
 };
 
 template class MeshObject<3, INDEXED, false>;
-template class MeshObject<3, BASIC, false>;
-template class MeshObject<3, BASIC, true>;
+template class MeshObject<2, BASIC, false>;
+template class MeshObject<2, BASIC, true>;

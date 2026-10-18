@@ -15,6 +15,7 @@ class ShaderProgram
     GLuint shaderProgram;
     
     ShaderProgram(){};
+    
     ShaderProgram(std::vector<Shader*> SHADERS);
     void makeCurrent();
 
