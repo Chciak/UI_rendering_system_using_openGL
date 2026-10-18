@@ -2,8 +2,10 @@
 
 #include <functional>
 #include <glad/gl.h>
+#include <glm/ext/matrix_float4x4.hpp>
 #include <vector>
 #include "ShaderProgram.h"
+#include <glm/glm.hpp>
 
 struct Coordinates
 {
@@ -74,37 +76,71 @@ class MeshObject
     GLuint VAO, VBO;
 
     ShaderProgram *shaderProgram;
-    Mesh meshPointer;
+    Mesh *meshPointer;
 
     public:
+    MeshObject(MeshObject const &) = delete;
+    MeshObject& operator=(const MeshObject&) = delete;
+
     MeshObject();
     MeshObject(ShaderProgram &shaderP, Mesh &mesh);
     virtual ~MeshObject();
+
     virtual inline void bindArrays();
     virtual inline void genBuffers();
-    virtual void render();
-    virtual void loadData();
+    virtual inline void render();
+    virtual inline void loadData();
 };
 
 template<int Size, bool bakcPropagated>
 class MeshObject <Size, INDEXED, bakcPropagated> : public MeshObject<Size, BASIC, true>
 {
+    protected:
+
     typedef std::vector<MeshData<Size>> Mesh;
 
     GLuint EBO;
-    std::vector<int> eboDataPointer;
+    std::vector<int> *eboDataPointer;
 
     public:
+    MeshObject(MeshObject &) = delete;
+    MeshObject& operator=(const MeshObject&) = delete;
+
     MeshObject() : MeshObject<Size, BASIC, true>(){};
     MeshObject(ShaderProgram &shaderP, Mesh &mesh, std::vector<int> &eboDataPointer);
-    ~MeshObject();
-    inline void bindArrays() override;
-    inline void genBuffers() override;
+    virtual ~MeshObject() override;
 
+    virtual inline void bindArrays() override;
+    virtual inline void genBuffers() override;
     virtual inline void render() override;
     virtual inline void loadData() override;
 };
 
+template<int Size, bool bakcPropagated>
+class MeshObject <Size, INSTANCED, bakcPropagated> : public MeshObject<Size, INDEXED, true>
+{
+    typedef std::vector<MeshData<Size>> Mesh;
+
+    GLuint instanceVBO;
+    std::vector<glm::mat4> *offsetDataPointer;
+    public:
+
+    MeshObject(MeshObject &) = delete;
+    MeshObject& operator=(const MeshObject&) = delete;
+
+    MeshObject() : MeshObject<Size, INDEXED, true>(){};
+    MeshObject(ShaderProgram &shaderP, Mesh &mesh, std::vector<int> &eboDataPointer, std::vector<glm::mat4> &transformation);
+    ~MeshObject() override;
+
+    inline void bindArrays() override;
+    inline void genBuffers() override;
+    inline void render() override;
+    inline void loadData() override;
+
+};
+
+template class MeshObject<3, INSTANCED, false>;
+template class MeshObject<3, INDEXED, true>;
 template class MeshObject<3, INDEXED, false>;
-template class MeshObject<2, BASIC, false>;
-template class MeshObject<2, BASIC, true>;
+template class MeshObject<3, BASIC, false>;
+template class MeshObject<3, BASIC, true>;

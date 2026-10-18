@@ -1,7 +1,6 @@
 #pragma once
 
 #include <functional>
-#include <iostream>
 #include <GLFW/glfw3.h>
 
 #define WINDOW_NAME "UI_APP"

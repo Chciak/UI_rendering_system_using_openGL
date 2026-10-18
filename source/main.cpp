@@ -33,9 +33,9 @@ int main()
 
     std::vector<MeshData<3>> mesh = {
         {{ 0.5f,  0.5f, 0.0f},{{1.0f, 0.0f, 0.0f}}},
-        {{ 0.5f, -0.5f, 0.0f},{{1.0f, 0.0f, 0.0f}}},
-        {{-0.5f, -0.5f, 0.0f},{{1.0f, 0.0f, 0.0f}}},
-        {{-0.5f,  0.5f, 0.0f},{{1.0f, 0.0f, 0.0f}}}
+        {{ 0.5f, -0.5f, 0.0f},{{0.0f, 1.0f, 0.0f}}},
+        {{-0.5f, -0.5f, 0.0f},{{0.0f, 1.0f, 0.0f}}},
+        {{-0.5f,  0.5f, 0.0f},{{0.0f, 0.0f, 1.0f}}}
     };
 
     std::vector<int> indices = {
@@ -43,11 +43,38 @@ int main()
         1, 2, 3
     };
 
-    MeshObject<3, INDEXED, false> triangle{prog, mesh, indices};
+    std::vector<glm::mat4> transformation
+    {
+
+        glm::mat4(
+        0.3f, 0.0f, 0.0f, 0.0f,  // 1. kolumna
+        0.0f, 0.3f, 0.0f, 0.0f,  // 2. kolumna
+        0.0f, 0.0f, 0.3f, 0.0f,  // 3. kolumna
+        0.0f, 0.0f, 0.0f, 1.0f   // 4. kolumna
+        ),
+
+        glm::mat4(
+        0.3f, 0.0f, 0.0f, 0.0f,  // 1. kolumna
+        0.0f, 0.3f, 0.0f, 0.0f,  // 2. kolumna
+        0.0f, 0.0f, 0.3f, 0.0f,  // 3. kolumna
+        0.5f, 0.5f, 0.0f, 1.0f   // 4. kolumna
+        ),
+
+        glm::mat4(
+        0.3f, 0.0f, 0.0f, 0.0f,  // 1. kolumna
+        0.0f, 0.3f, 0.0f, 0.0f,  // 2. kolumna
+        0.0f, 0.0f, 0.3f, 0.0f,  // 3. kolumna
+        0.0f, 0.5f, 0.0f, 1.0f   // 4. kolumna
+        )
+
+    };
+
+    MeshObject<3, INSTANCED, false> triangle{prog, mesh, indices, transformation};
 
     app.prepress();
     while (!glfwWindowShouldClose(app.window->window))
     {
+        glClear(GL_COLOR_BUFFER_BIT);
         triangle.render();
         app.postpress();
     }
