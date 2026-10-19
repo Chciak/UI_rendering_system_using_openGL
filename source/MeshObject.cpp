@@ -50,7 +50,7 @@ MeshObject<Size, type, bakcPropagated>::MeshObject(ShaderProgram &shaderP,Mesh &
 }
 
 template<int Size, bool bakcPropagated>
-MeshObject<Size, INDEXED, bakcPropagated>::MeshObject(ShaderProgram &shaderP, Mesh &mesh, std::vector<int> &eboData)
+MeshObject<Size, INDEXED, bakcPropagated>::MeshObject(ShaderProgram &shaderP, Mesh &mesh, std::vector<unsigned int> &eboData)
     :MeshObject<Size, BASIC, true>(shaderP, mesh)
 {
     eboDataPointer = &eboData;
@@ -62,7 +62,7 @@ MeshObject<Size, INDEXED, bakcPropagated>::MeshObject(ShaderProgram &shaderP, Me
 }
 
 template<int Size, bool bakcPropagated>
-MeshObject<Size, INSTANCED, bakcPropagated>::MeshObject(ShaderProgram &shaderP, Mesh &mesh, std::vector<int> &eboData, std::vector<glm::mat4> &transformation)
+MeshObject<Size, INSTANCED, bakcPropagated>::MeshObject(ShaderProgram &shaderP, Mesh &mesh, std::vector<unsigned int> &eboData, std::vector<glm::mat4> &transformation)
     :MeshObject<Size, INDEXED, true>(shaderP, mesh, eboData)
 {
     offsetDataPointer = &transformation;
@@ -84,7 +84,7 @@ inline void MeshObject<Size, type, bakcPropagated>::render()
 template<int Size, bool bakcPropagated>
 inline void MeshObject<Size, INDEXED, bakcPropagated>::render()
 {
-    bindArrays();
+    this->bindArrays();
     this->shaderProgram->makeCurrent();
     glDrawElements(GL_TRIANGLES, this->eboDataPointer->size(), GL_UNSIGNED_INT, 0);
 }
@@ -111,21 +111,21 @@ inline void MeshObject<Size, type, bakcPropagated>::loadData()
 template<int Size, bool bakcPropagated>
 inline void MeshObject<Size, INDEXED, bakcPropagated>::loadData()
 {
-    this->bindArrays();
+    bindArrays();
     glBufferData(
         GL_ARRAY_BUFFER,
         this->meshPointer->size() * sizeof(MeshData<Size>), 
         this->meshPointer->data(), 
         GL_STATIC_DRAW);
-    
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, (3 + Size) * sizeof(float), (void*)0);
-    glVertexAttribPointer(1, Size, GL_FLOAT, GL_FALSE, (3 + Size) * sizeof(float), (void*)(3 * sizeof(float)));
 
     glBufferData(
         GL_ELEMENT_ARRAY_BUFFER,
         this->eboDataPointer->size() * (sizeof(int)), 
         this->eboDataPointer->data(), 
-        GL_STATIC_DRAW); 
+        GL_STATIC_DRAW);
+    
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_TRUE, (3 + Size) * sizeof(float), (void*)0);
+    glVertexAttribPointer(1, Size, GL_FLOAT, GL_TRUE, (3 + Size) * sizeof(float), (void*)(3 * sizeof(float)));
 
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
@@ -148,8 +148,8 @@ inline void MeshObject<Size, INSTANCED, bakcPropagated>::loadData()
         this->eboDataPointer->data(), 
         GL_STATIC_DRAW);
     
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, (3 + Size) * sizeof(float), (void*)0);
-    glVertexAttribPointer(1, Size, GL_FLOAT, GL_FALSE, (3 + Size) * sizeof(float), (void*)(3 * sizeof(float)));
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_TRUE, (3 + Size) * sizeof(float), (void*)0);
+    glVertexAttribPointer(1, Size, GL_FLOAT, GL_TRUE, (3 + Size) * sizeof(float), (void*)(3 * sizeof(float)));
 
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
@@ -161,8 +161,6 @@ inline void MeshObject<Size, INSTANCED, bakcPropagated>::loadData()
         this->offsetDataPointer->data(),
         GL_STATIC_DRAW);
 
-    //glVertexAttribPointer(2, sizeof(glm::mat4), GL_FLOAT, GL_FALSE, 16*sizeof(float), (void*)0);
-    
     for (unsigned int i = 0; i < 4; i++)
     {
         glEnableVertexAttribArray(2 + i);
@@ -170,7 +168,7 @@ inline void MeshObject<Size, INSTANCED, bakcPropagated>::loadData()
             2 + i,
             4,
             GL_FLOAT, 
-            GL_FALSE, 
+            GL_TRUE, 
             sizeof(glm::mat4),
             (void*)(i * sizeof(glm::vec4))
         );

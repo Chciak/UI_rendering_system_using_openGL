@@ -6,6 +6,6 @@ layout (location = 2) in mat4 transformation;
 out vec3 COL;
 void main()
 {
-    gl_Position = transformation * vec4(aPos.x, aPos.y, aPos.z, 1.0);
+    gl_Position = transformation*vec4(aPos.x, aPos.y, aPos.z, 1.0);
     COL = rgb;
 }

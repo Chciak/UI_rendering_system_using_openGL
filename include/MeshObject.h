@@ -100,14 +100,14 @@ class MeshObject <Size, INDEXED, bakcPropagated> : public MeshObject<Size, BASIC
     typedef std::vector<MeshData<Size>> Mesh;
 
     GLuint EBO;
-    std::vector<int> *eboDataPointer;
+    std::vector<unsigned int> *eboDataPointer;
 
     public:
     MeshObject(MeshObject &) = delete;
     MeshObject& operator=(const MeshObject&) = delete;
 
     MeshObject() : MeshObject<Size, BASIC, true>(){};
-    MeshObject(ShaderProgram &shaderP, Mesh &mesh, std::vector<int> &eboDataPointer);
+    MeshObject(ShaderProgram &shaderP, Mesh &mesh, std::vector<unsigned int> &eboDataPointer);
     virtual ~MeshObject() override;
 
     virtual inline void bindArrays() override;
@@ -129,15 +129,24 @@ class MeshObject <Size, INSTANCED, bakcPropagated> : public MeshObject<Size, IND
     MeshObject& operator=(const MeshObject&) = delete;
 
     MeshObject() : MeshObject<Size, INDEXED, true>(){};
-    MeshObject(ShaderProgram &shaderP, Mesh &mesh, std::vector<int> &eboDataPointer, std::vector<glm::mat4> &transformation);
+    
+    MeshObject(ShaderProgram &shaderP, Mesh &mesh, std::vector<unsigned int> &eboDataPointer, std::vector<glm::mat4> &transformation);
     ~MeshObject() override;
 
     inline void bindArrays() override;
     inline void genBuffers() override;
     inline void render() override;
     inline void loadData() override;
-
 };
+
+template <int Size>
+using InstancedMesh = MeshObject<Size, INSTANCED, false>;
+
+template <int Size>
+using IndexedMesh = MeshObject<Size, INDEXED, false>;
+
+template <int Size>
+using Mesh = MeshObject<Size, INSTANCED, false>;
 
 template class MeshObject<3, INSTANCED, false>;
 template class MeshObject<3, INDEXED, true>;
