@@ -35,6 +35,7 @@ MeshObject<Size, type, bakcPropagated>::MeshObject()
     shaderProgram = nullptr;
 } 
 
+
 template<int Size, MeshObject_T type, bool bakcPropagated>
 MeshObject<Size, type, bakcPropagated>::MeshObject(ShaderProgram &shaderP,Mesh &mesh) 
     :MeshObject<Size, type, bakcPropagated>()

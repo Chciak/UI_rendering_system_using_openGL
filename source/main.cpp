@@ -9,6 +9,7 @@
 #include "MeshObject.h"
 #include "Shader.h"
 #include "ShaderProgram.h"
+#include "RenderPanel.h"
 
 int main()
 {  
@@ -32,6 +33,11 @@ int main()
     Shader frag {&app, APP_FRAGMENT, "test"};
     ShaderProgram prog {{&vert, &frag}};
 
+    Shader fboVert {&app, APP_VERTEX, "fboTest"};
+    Shader fboFrag {&app, APP_FRAGMENT, "fboTest"};
+    ShaderProgram fboProg {{&vert, &frag}};
+
+
     std::vector<MeshData<3>> mesh = {
         {{-1.0f,  1.0f, 0.0f}, {{0.0f, 1.0f, 0.0f}}},
         {{-1.0f, -1.0f, 0.0f}, {{0.0f, 0.0f, 0.0f}}},
@@ -53,13 +59,15 @@ int main()
         glm::translate(glm::mat4(1.0f), glm::vec3(1.5f, 0.0f, 0.0f)),
     };
 
-    MeshObject<3, INSTANCED, false> triangle{prog, mesh, indices, transformation};
+    InstancedMesh<3> rectangle1{prog, mesh, indices, transformation};
 
+    // RenderPanel test;
+    // IndexedMesh<3> rectangle2(fboProg, mesh, indices);
     app.prepress();
     while (!glfwWindowShouldClose(app.window->window))
     {
         glClear(GL_COLOR_BUFFER_BIT);
-        triangle.render();
+        rectangle1.render();
         app.postpress();
     }
     app.onQuit();

@@ -12,11 +12,17 @@ class Application
 
     public:
     char *shaderDir;
+    char *textureDir;
+    char *meshDir;
+
     GLFWWindow *window;
     
     Application();
     void setShaderDir(const char sDir[]);  
-    std::function<void()> prepress;
-    std::function<void()> postpress;
-    std::function<void()> onQuit;
+    void setTextureDir(const char tDir[]);
+    void setMeshDir(const char mDir);
+
+    virtual inline void prepress();
+    virtual inline void postpress();
+    virtual inline void onQuit();
 };

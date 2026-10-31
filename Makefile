@@ -1,6 +1,8 @@
+MAKEFLAGS += -j8
+
 CPPFLAGS = -Wall -I/usr/local/include -I/run/media/rober/T7/UI_2/include
 CFLAGS = -Wall
-LDFLAGS = -lglfw -lGL -ldl -lpthread
+LDFLAGS = -L/usr/local/lib -Wl,-rpath,/usr/local/lib -lglfw -lGL -ldl -lpthread -lsoil2
 
 SRCDIR := source
 BUILDDIR := build
@@ -13,7 +15,6 @@ SRC_C := $(notdir $(SRC_FILES_C))
 BLD_PP := $(patsubst %.cpp, $(BUILDDIR)/%.o, $(SRC))
 BLD_C := $(patsubst %.c, $(BUILDDIR)/%.o, $(SRC_C))
 TARGET := UI_APP_LINUX
-
 
 clean: 
 	rm -f $(TARGET) $(BUILDDIR)/*.o

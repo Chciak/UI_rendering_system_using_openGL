@@ -149,7 +149,4 @@ template <int Size>
 using Mesh = MeshObject<Size, INSTANCED, false>;
 
 template class MeshObject<3, INSTANCED, false>;
-template class MeshObject<3, INDEXED, true>;
-template class MeshObject<3, INDEXED, false>;
-template class MeshObject<3, BASIC, false>;
-template class MeshObject<3, BASIC, true>;
+template class MeshObject<2, INDEXED, false>;

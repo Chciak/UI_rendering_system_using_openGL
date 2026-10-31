@@ -26,22 +26,22 @@ void Application::setShaderDir(const char sDir[])
     strcpy(shaderDir, sDir);
 
     P_APPINFO("Shader directory : " << shaderDir);
+}
 
-    prepress = []()
-    {
-        glClearColor(CLEA_COLOUR);
-    };
+inline void Application::prepress()
+{
+    glClearColor(CLEA_COLOUR);
+}
 
-    postpress = [this]()
-    {
-        glfwSwapBuffers(window->window);
-        glfwPollEvents();
-    };
+inline void Application::postpress()
+{
+    glfwSwapBuffers(window->window);
+    glfwPollEvents();
+}
 
-    onQuit = [this] ()
-    {
-        delete this->window;
-        glfwDestroyWindow(this->window->window);
-        glfwTerminate();
-    };
+inline void Application::onQuit()
+{
+    delete this->window;
+    glfwDestroyWindow(this->window->window);
+    glfwTerminate();
 }
