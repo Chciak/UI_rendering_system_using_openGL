@@ -51,6 +51,9 @@ Since the application uses OpenGL for rendering, the implementation of complex s
 - [ ] Horizontal expandable button list
 - [ ] Radio buttons
 - [ ] ... other UI (User Interface – Interfejs Użytkownika) elements
+**Text rendering**
+- [ ] From texture atlas
+- [ ] FreeType fonts
 
 
 
