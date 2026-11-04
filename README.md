@@ -19,13 +19,13 @@ Since the application uses OpenGL for rendering, the implementation of complex s
 
 ## Built for
 - Platform: Fedora Linux desktop
-- Language: C / C++ (C Plus Plus)
+- Language: C / C++
 
 ## Dependencies
-- GLAD (OpenGL Loader-Generator – Generator Ładowacza OpenGL)
-- GLFW (Graphics Library Framework – Szkielet Biblioteki Graficznej)
-- GLM (OpenGL Mathematics – Matematyka OpenGL)
-- OpenGL (Open Graphics Library – Otwarta Biblioteka Graficzna) 4.0
+- GLAD
+- GLFW
+- GLM
+- OpenGL 4.0
 
 ## Implemented features
 **3 mesh types:**
